@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using angular_dotnet_example.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,7 +28,8 @@ namespace angular_dotnet_example.Controllers
         [Route("api/users")]
         public IEnumerable<Models.UserModel> GetAllUsers()
         {
-            return repository.GetAll();
+            var allfiles = Directory.GetFiles("/home/pi/storage/downloads/", "*.*", SearchOption.AllDirectories).ToList().Select(x => new UserModel(){firstName = x});
+            return allfiles;
         }
 
         [HttpPost]
