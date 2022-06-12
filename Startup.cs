@@ -1,3 +1,4 @@
+using angular_dotnet_example.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,12 +11,12 @@ namespace angular_dotnet_example
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -26,6 +27,8 @@ namespace angular_dotnet_example
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddOptions();
+            services.Configure<ApplicationDetails>(_configuration.GetSection("ApplicationDetails"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
